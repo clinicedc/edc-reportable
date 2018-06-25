@@ -191,4 +191,3 @@ If the value is not evaluated against any reportable ranges, a `NotEvaluated` ex
             gender=MALE, dob=dob, report_datetime=report_datetime)
 
     NotEvaluated: neutrophil value not graded. No reference range found ...
-
