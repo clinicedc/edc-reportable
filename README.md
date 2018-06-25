@@ -1,6 +1,6 @@
-# edc-reportable
-
 [![Build Status](https://travis-ci.org/clinicedc/edc-reportable.svg?branch=develop)](https://travis-ci.org/clinicedc/edc-reportable) [![Coverage Status](https://coveralls.io/repos/github/clinicedc/edc-reportable/badge.svg?branch=develop)](https://coveralls.io/github/clinicedc/edc-reportable?branch=develop)
+
+# edc-reportable
 
 Reportable clinic events, reference ranges, grading
 
@@ -31,7 +31,7 @@ A normal reference is declared like this:
     ref
     >>> NormalReference(neutrophils, 2.5<x<7.5 10e9/L MF, 18<AGE<99 years)   
 
-And add to a group like this:
+And added to a group like this:
     
     neutrophils.add_normal(ref)
  
@@ -70,6 +70,26 @@ Declare and add a `GradeReference` for each reportable grade of the test.
 > with another grade reference in the same group, a `BoundaryOverlap`
 > exception will be raised when the value is evaluated.
 > Catch this in your tests.
+
+
+### Declaring with `parse`
+
+You may find using `parse` somewhat simplifies the declaration where `lower`, `lower_inclusive`, `upper` and `upper_inclusive` can be written as a phrase, like `13.5<=x<=17.5`. For example:
+
+    age_opts = dict(
+        age_lower=18,
+        age_upper=120,
+        age_units='years',
+        age_lower_inclusive=True,
+        age_upper_inclusive=True)
+    
+    normal_data = {
+        'haemoglobin': [
+            p('13.5<=x<=17.5', units=GRAMS_PER_DECILITER,
+              gender=[MALE], **age_opts),
+            p('12.0<=x<=15.5', units=GRAMS_PER_DECILITER, gender=[FEMALE], **age_opts)],
+         ...
+    }
 
 
 ### Registering with `site_reportables`
