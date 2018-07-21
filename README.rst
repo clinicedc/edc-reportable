@@ -1,10 +1,12 @@
-# edc-reportable
+|pypi| |travis| |coverage|
 
-[![Build Status](https://travis-ci.org/botswana-harvard/edc-reportable.svg?branch=develop)](https://travis-ci.org/botswana-harvard/edc-reportable) [![Coverage Status](https://coveralls.io/repos/github/botswana-harvard/edc-reportable/badge.svg?branch=develop)](https://coveralls.io/github/botswana-harvard/edc-reportable?branch=develop)
+edc-reportable
+--------------
 
 Reportable clinic events, reference ranges, grading
 
-
+.. code-block:: python
+    
     from dateutil.relativedelta import relativedelta
     from edc_base.utils import get_utcnow
     from edc_constants.constants import MALE, FEMALE
@@ -14,10 +16,14 @@ Reportable clinic events, reference ranges, grading
     
 Create a group for each test:
 
+.. code-block:: python
+    
     neutrophils = ValueReferenceGroup(name='neutrophils')
 
 A normal reference is declared like this:
 
+.. code-block:: python
+    
     ref = NormalReference(
         name='neutrophils',
         lower=2.5,
@@ -29,21 +35,26 @@ A normal reference is declared like this:
         gender=[MALE, FEMALE])
     
     ref
-    >>> NormalReference(neutrophils, 2.5<x<7.5 10e9/L MF, 18<AGE<99 years)   
 
-And add to a group like this:
+ NormalReference(neutrophils, 2.5<x<7.5 10e9/L MF, 18<AGE<99 years)   
+
+And added to a group like this:
+    
+.. code-block:: python
     
     neutrophils.add_normal(ref)
  
-Add as many normal references in a group as you like, just ensure the `lower` and `upper` boundaries don't overlap.
+Add as many normal references in a group as you like, just ensure the ``lower`` and ``upper`` boundaries don't overlap.
 
-> __Note:__ If the lower and upper values of a normal reference overlap 
-> with another normal reference in the same group, a `BoundaryOverlap`
-> exception will be raised when the value is evaluated.
-> Catch this in your tests.
+ **Note**: If the lower and upper values of a normal reference overlap 
+ with another normal reference in the same group, a ``BoundaryOverlap``
+ exception will be raised when the value is evaluated.
+ Catch this in your tests.
  
 A grading reference is declared like this:
 
+.. code-block:: python
+    
     g3 = GradeReference(
         name='neutrophils',
         grade=3,
@@ -62,41 +73,77 @@ A grading reference is declared like this:
 
 And added to the group like this:
 
+.. code-block:: python
+    
     neutrophils.add_grading(g3)
 
-Declare and add a `GradeReference` for each reportable grade of the test. 
+Declare and add a ``GradeReference`` for each reportable grade of the test. 
 
-> __Note:__ If the lower and upper values of a grade reference overlap 
-> with another grade reference in the same group, a `BoundaryOverlap`
-> exception will be raised when the value is evaluated.
-> Catch this in your tests.
+ **Note**: If the lower and upper values of a grade reference overlap 
+ with another grade reference in the same group, a ``BoundaryOverlap``
+ exception will be raised when the value is evaluated.
+ Catch this in your tests.
 
 
-### Registering with `site_reportables`
+Declaring with ``parse``
+======================
+
+You may find using ``parse`` somewhat simplifies the declaration where ``lower``, ``lower_inclusive``, ``upper`` and ``upper_inclusive`` can be written as a phrase, like ``13.5<=x<=17.5``. For example:
+
+.. code-block:: python
+    
+    age_opts = dict(
+        age_lower=18,
+        age_upper=120,
+        age_units='years',
+        age_lower_inclusive=True,
+        age_upper_inclusive=True)
+    
+    normal_data = {
+        'haemoglobin': [
+            p('13.5<=x<=17.5', units=GRAMS_PER_DECILITER,
+              gender=[MALE], **age_opts),
+            p('12.0<=x<=15.5', units=GRAMS_PER_DECILITER, gender=[FEMALE], **age_opts)],
+         ...
+    }
+
+
+Registering with ``site_reportables``
+===================================
 
 Once you have declared all your references, register them
 
+.. code-block:: python
+    
     site_reportables.register(
         name='my_project',
         normal_data=normal_data,
         grading_data=grading_data)
 
-> __Important:__ Writing out references is prone to error. It is better to declare a
-> dictionary of normal references and grading references. Use the `parse` function
-> so that you can use a phrase like `13.5<=x<=17.5` instead of a listing attributes. 
-> There are examples of complete `normal_data` and `grading_data` in the tests.
-> See`edc_reportable.tests.reportables`. 
+ 
+
+**Important**:
+ Writing out references is prone to error. It is better to declare a
+ dictionary of normal references and grading references. Use the ``parse`` function
+ so that you can use a phrase like ``13.5<=x<=17.5`` instead of a listing attributes. 
+ There are examples of complete ``normal_data`` and ``grading_data`` in the tests.
+ See``edc_reportable.tests.reportables``. 
 
 You can export your declared references to CSV for further inspection
 
+.. code-block:: python
+    
     >>> site_reportables.to_csv(name='my_project', path='~/')
     
     ('/Users/erikvw/my_project_normal_ranges.csv',
     '/Users/erikvw/my_project_grading.csv')    
 
-### Using your reportables
+Using your reportables
+======================
 
 In your code, get the references by collection name:
+    
+.. code-block:: python
     
     my_project_reportables = site_reportables.get('my_project')
 
@@ -105,10 +152,13 @@ In your code, get the references by collection name:
     report_datetime = get_utcnow()
     dob = (report_datetime - relativedelta(years=25)).date() 
     
-### Check a normal value
+Check a normal value
+====================
 
-If a value is normal, `get_normal` returns the `NormalReference` instance that matched with the value. 
+If a value is normal, ``get_normal`` returns the ``NormalReference`` instance that matched with the value. 
 
+.. code-block:: python
+    
     # evaluate a normal value
     normal = neutrophil.get_normal(
         value=3.5, units='10^9/L',
@@ -118,10 +168,13 @@ If a value is normal, `get_normal` returns the `NormalReference` instance that m
     >>> normal.description
     '2.5<=3.5<=7.5 10^9/L MF, 18<=AGE years'
 
-### Check an abnormal value
+Check an abnormal value
+=======================
 
-If a value is abnormal, `get_normal` returns `None`.
+If a value is abnormal, ``get_normal`` returns ``None``.
 
+.. code-block:: python
+    
     # evaluate an abnormal value
     opts = dict(
         units='10^9/L',
@@ -134,14 +187,19 @@ If a value is abnormal, `get_normal` returns `None`.
             print('abnormal')
     'abnormal'
  
- To show which ranges the value was evaluated against
+To show which ranges the value was evaluated against
 
+.. code-block:: python
+    
     # use same options for units, gender, dob, report_datetime
     >>> neutrophil.get_normal_description(**opts)
     ['2.5<=x<=7.5 10^9/L MF, 18<=AGE years']
     
-### Check if a value is "reportable"
+Check if a value is "reportable"
+================================
 
+.. code-block:: python
+    
     grade = neutrophil.get_grade(
         value=0.43, units='10^9/L',
         gender=MALE, dob=dob, report_datetime=report_datetime)
@@ -162,13 +220,23 @@ If a value is abnormal, `get_normal` returns `None`.
     >>> grade.description
     '0.3<0.4 10^9/L GRADE 4'
     
-If the value is not evaluated against any reportable ranges, a `NotEvaluated` exception is raised
+If the value is not evaluated against any reportable ranges, a ``NotEvaluated`` exception is raised
 
+.. code-block:: python
+    
     # call with the wrong units
     
     >>> grade = neutrophil.get_grade(
             value=0.3, units='mmol/L',
             gender=MALE, dob=dob, report_datetime=report_datetime)
 
-    NotEvaluated: neutrophil value not graded. No reference range found ...
+        NotEvaluated: neutrophil value not graded. No reference range found ...
 
+.. |pypi| image:: https://img.shields.io/pypi/v/edc-reportable.svg
+    :target: https://pypi.python.org/pypi/edc-reportable
+    
+.. |travis| image:: https://travis-ci.org/clinicedc/edc-reportable.svg?branch=develop
+    :target: https://travis-ci.org/clinicedc/edc-reportable
+    
+.. |coverage| image:: https://coveralls.io/repos/github/clinicedc/edc-reportable/badge.svg?branch=develop
+    :target: https://coveralls.io/github/clinicedc/edc-reportable?branch=develop
