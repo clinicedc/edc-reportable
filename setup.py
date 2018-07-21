@@ -19,7 +19,7 @@ setup(
     author_email='ew2789@gmail.com',
     packages=find_packages(),
     url='http://github.com/clinicedc/edc-reportable',
-    license='GPL licence, see LICENCE',
+    license='GPL license, see LICENSE',
     description='Reportable clinic events, reference ranges, grading',
     long_description=README,
     include_package_data=True,
