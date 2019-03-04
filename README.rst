@@ -8,7 +8,7 @@ Reportable clinic events, reference ranges, grading
 .. code-block:: python
     
     from dateutil.relativedelta import relativedelta
-    from edc_base.utils import get_utcnow
+    from edc_utils import get_utcnow
     from edc_constants.constants import MALE, FEMALE
     from edc_reportable import ValueReferenceGroup, NormalReference, GradeReference
     from edc_reportable import site_reportables
