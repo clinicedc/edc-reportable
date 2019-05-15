@@ -86,7 +86,7 @@ Declare and add a ``GradeReference`` for each reportable grade of the test.
 
 
 Declaring with ``parse``
-======================
+========================
 
 You may find using ``parse`` somewhat simplifies the declaration where ``lower``, ``lower_inclusive``, ``upper`` and ``upper_inclusive`` can be written as a phrase, like ``13.5<=x<=17.5``. For example:
 
@@ -109,7 +109,7 @@ You may find using ``parse`` somewhat simplifies the declaration where ``lower``
 
 
 Registering with ``site_reportables``
-===================================
+=====================================
 
 Once you have declared all your references, register them
 
