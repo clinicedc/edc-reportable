@@ -1,1 +1,4 @@
 edc-test-utils
+edc-model
+edc-registration
+edc-contsants
