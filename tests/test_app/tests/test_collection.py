@@ -1,14 +1,17 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from django.test import TestCase, tag
 from edc_utils import get_utcnow
 from edc_constants.constants import MALE, FEMALE
 from pytz import utc
-from unittest import TestCase
 
-from ..grade_reference import GradeReference
-from ..normal_reference import NormalReference
-from ..reference_collection import ReferenceCollection, AlreadyRegistered
-from ..value_reference_group import ValueReferenceGroup
+from edc_reportable import (
+    AlreadyRegistered,
+    GradeReference,
+    NormalReference,
+    ReferenceCollection,
+    ValueReferenceGroup,
+)
 
 
 class TestCollection(TestCase):

@@ -1,17 +1,17 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from edc_utils import get_utcnow
+from django.test import TestCase, tag
 from edc_constants.constants import MALE, FEMALE
-from pytz import utc
-from unittest import TestCase
-
-from ..normal_reference import NormalReference
-from ..value_reference_group import (
-    InvalidValueReference,
-    NotEvaluated,
+from edc_reportable import (
     BoundariesOverlap,
+    InvalidValueReference,
+    NormalReference,
+    NotEvaluated,
+    ValueReferenceAlreadyAdded,
+    ValueReferenceGroup,
 )
-from ..value_reference_group import ValueReferenceGroup, ValueReferenceAlreadyAdded
+from edc_utils import get_utcnow
+from pytz import utc
 
 
 class TestValueReference(TestCase):
@@ -257,7 +257,7 @@ class TestValueReference(TestCase):
                 gender=FEMALE, dob=dob, report_datetime=report_datetime, units="mg/dL"
             ),
             ["1.7<x<=3.5 mg/dL F 18<AGE<99 years",
-             "7.3<x mg/dL F 18<AGE<99 years"],
+                "7.3<x mg/dL F 18<AGE<99 years"],
         )
 
         # overlaps with ref_female3
