@@ -1,13 +1,17 @@
 from copy import copy
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from edc_utils import get_utcnow
+from django.test import TestCase, tag
 from edc_constants.constants import MALE, FEMALE
+from edc_reportable import (
+    BoundariesOverlap,
+    GradeError,
+    GradeReference,
+    NotEvaluated,
+    ValueReferenceGroup,
+)
+from edc_utils import get_utcnow
 from pytz import utc
-from unittest import TestCase
-
-from ..grade_reference import GradeReference, GradeError
-from ..value_reference_group import NotEvaluated, ValueReferenceGroup, BoundariesOverlap
 
 
 class TestGrading(TestCase):
