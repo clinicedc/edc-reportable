@@ -4,7 +4,7 @@ from edc_constants.constants import MALE
 from edc_reportable import site_reportables
 from edc_utils import get_utcnow
 from tempfile import mkdtemp
-from test_app.reportables import normal_data, grading_data
+from reportable_app.reportables import normal_data, grading_data
 
 
 class TestSiteReportables(TestCase):

@@ -9,9 +9,9 @@ from edc_reportable import MILLIMOLES_PER_LITER
 from edc_reportable import site_reportables
 from edc_reportable.units import MILLIGRAMS_PER_DECILITER
 from edc_utils import get_utcnow
-from test_app.form_validators import SpecimenResultFormValidator
-from test_app.models import SpecimenResult
-from test_app.reportables import normal_data, grading_data
+from reportable_app.form_validators import SpecimenResultFormValidator
+from reportable_app.models import SpecimenResult
+from reportable_app.reportables import normal_data, grading_data
 
 
 class TestSpecimenResultForm(TestCase):
