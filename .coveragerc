@@ -1,4 +1,4 @@
 [run]
-include = edc_reporatable/*
-omit = edc_reporatable/tests/*,edc_reporatable/migrations/*
+include = edc_reportable/*
+omit = edc_reportable/tests/*,edc_reportable/migrations/*
 branch = 1
