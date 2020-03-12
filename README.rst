@@ -235,8 +235,8 @@ If the value is not evaluated against any reportable ranges, a ``NotEvaluated`` 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-reportable.svg
     :target: https://pypi.python.org/pypi/edc-reportable
     
-.. |travis| image:: https://travis-ci.org/clinicedc/edc-reportable.svg?branch=develop
-    :target: https://travis-ci.org/clinicedc/edc-reportable
+.. |travis| image:: https://travis-ci.com/clinicedc/edc-reportable.svg?branch=develop
+    :target: https://travis-ci.com/clinicedc/edc-reportable
     
 .. |coverage| image:: https://coveralls.io/repos/github/clinicedc/edc-reportable/badge.svg?branch=develop
     :target: https://coveralls.io/github/clinicedc/edc-reportable?branch=develop
