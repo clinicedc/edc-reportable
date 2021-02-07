@@ -1,9 +1,11 @@
 from copy import copy
-from edc_constants.constants import YES, MALE
-from edc_reportable import ReportablesFormValidatorMixin, GRADE3, GRADE4
-from edc_utils.date import get_utcnow
-from edc_form_validators import FormValidator
+
 from dateutil.relativedelta import relativedelta
+from edc_constants.constants import MALE, YES
+from edc_form_validators import FormValidator
+from edc_utils.date import get_utcnow
+
+from edc_reportable import GRADE3, GRADE4, ReportablesFormValidatorMixin
 
 
 class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
@@ -31,5 +33,4 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
             YES, field="results_abnormal", field_applicable="results_reportable"
         )
 
-        reportables.validate_results_reportable_field(
-            responses=self.reportable_grades)
+        reportables.validate_results_reportable_field(responses=self.reportable_grades)

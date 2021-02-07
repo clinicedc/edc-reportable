@@ -1,10 +1,11 @@
 from django.db import models
-from edc_model.models import BaseUuidModel
 from django.db.models.deletion import CASCADE
-from edc_utils import get_utcnow
 from edc_constants.choices import YES_NO, YES_NO_NA
-from edc_reportable.units import GRAMS_PER_DECILITER
+from edc_model.models import BaseUuidModel
+from edc_utils import get_utcnow
+
 from edc_reportable.choices import REPORTABLE
+from edc_reportable.units import GRAMS_PER_DECILITER
 
 
 class SubjectVisit(BaseUuidModel):
@@ -18,9 +19,7 @@ class SpecimenResult(BaseUuidModel):
 
     report_datetime = models.DateTimeField(default=get_utcnow)
 
-    haemoglobin = models.DecimalField(
-        decimal_places=1, max_digits=6, null=True, blank=True
-    )
+    haemoglobin = models.DecimalField(decimal_places=1, max_digits=6, null=True, blank=True)
 
     haemoglobin_units = models.CharField(
         verbose_name="units",
@@ -49,8 +48,7 @@ class SpecimenResult(BaseUuidModel):
     )
 
     results_reportable = models.CharField(
-        verbose_name="If any results are abnormal, are results within grade III "
-        "or above?",
+        verbose_name="If any results are abnormal, are results within grade III " "or above?",
         max_length=25,
         choices=YES_NO_NA,
     )
