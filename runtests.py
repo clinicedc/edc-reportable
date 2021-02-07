@@ -1,16 +1,15 @@
 #!/usr/bin/env python
-import django
 import logging
 import os
 import sys
+from os.path import abspath, dirname
 
+import django
 from django.conf import settings
 from django.test.runner import DiscoverRunner
 from edc_test_utils import DefaultTestSettings
-from os.path import abspath, dirname
 
-
-app_name = 'edc_reportable'
+app_name = "edc_reportable"
 base_dir = dirname(abspath(__file__))
 
 DEFAULT_SETTINGS = DefaultTestSettings(
@@ -19,16 +18,16 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     APP_NAME=app_name,
     ETC_DIR=os.path.join(base_dir, app_name, "tests", "etc"),
     INSTALLED_APPS=[
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        'django.contrib.sites',
-        'edc_protocol.apps.AppConfig',
-        'reportable_app.apps.AppConfig',
-        'edc_reportable.apps.AppConfig',
+        "django.contrib.admin",
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.messages",
+        "django.contrib.staticfiles",
+        "django.contrib.sites",
+        "edc_protocol.apps.AppConfig",
+        "reportable_app.apps.AppConfig",
+        "edc_reportable.apps.AppConfig",
     ],
     add_dashboard_middleware=True,
     use_test_urls=True,
@@ -39,9 +38,8 @@ def main():
     if not settings.configured:
         settings.configure(**DEFAULT_SETTINGS)
     django.setup()
-    tags = [t.split('=')[1] for t in sys.argv if t.startswith('--tag')]
-    failures = DiscoverRunner(
-        failfast=False, tags=tags).run_tests([f'{app_name}.tests'])
+    tags = [t.split("=")[1] for t in sys.argv if t.startswith("--tag")]
+    failures = DiscoverRunner(failfast=False, tags=tags).run_tests([f"{app_name}.tests"])
     sys.exit(failures)
 
 
