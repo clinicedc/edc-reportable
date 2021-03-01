@@ -1,4 +1,4 @@
-|pypi| |travis| |coverage|
+|pypi| |actions| |coverage|
 
 edc-reportable
 --------------
@@ -6,24 +6,24 @@ edc-reportable
 Reportable clinic events, reference ranges, grading
 
 .. code-block:: python
-    
+
     from dateutil.relativedelta import relativedelta
     from edc_utils import get_utcnow
     from edc_constants.constants import MALE, FEMALE
     from edc_reportable import ValueReferenceGroup, NormalReference, GradeReference
     from edc_reportable import site_reportables
     from edc_reportable.tests.reportables import normal_data, grading_data
-    
+
 Create a group for each test:
 
 .. code-block:: python
-    
+
     neutrophils = ValueReferenceGroup(name='neutrophils')
 
 A normal reference is declared like this:
 
 .. code-block:: python
-    
+
     ref = NormalReference(
         name='neutrophils',
         lower=2.5,
@@ -33,28 +33,28 @@ A normal reference is declared like this:
         age_upper=99,
         age_units='years',
         gender=[MALE, FEMALE])
-    
+
     ref
 
- NormalReference(neutrophils, 2.5<x<7.5 10e9/L MF, 18<AGE<99 years)   
+ NormalReference(neutrophils, 2.5<x<7.5 10e9/L MF, 18<AGE<99 years)
 
 And added to a group like this:
-    
+
 .. code-block:: python
-    
+
     neutrophils.add_normal(ref)
- 
+
 Add as many normal references in a group as you like, just ensure the ``lower`` and ``upper`` boundaries don't overlap.
 
- **Note**: If the lower and upper values of a normal reference overlap 
+ **Note**: If the lower and upper values of a normal reference overlap
  with another normal reference in the same group, a ``BoundaryOverlap``
  exception will be raised when the value is evaluated.
  Catch this in your tests.
- 
+
 A grading reference is declared like this:
 
 .. code-block:: python
-    
+
     g3 = GradeReference(
         name='neutrophils',
         grade=3,
@@ -67,19 +67,19 @@ A grading reference is declared like this:
         age_upper=99,
         age_units='years',
         gender=[MALE, FEMALE])
-    
+
     >>> g3
     GradeReference(neutrophils, 0.4<=x<=0.59 in 10e9/L GRADE 3, MF, 18<AGE<99 in years) GRADE 3)
 
 And added to the group like this:
 
 .. code-block:: python
-    
+
     neutrophils.add_grading(g3)
 
-Declare and add a ``GradeReference`` for each reportable grade of the test. 
+Declare and add a ``GradeReference`` for each reportable grade of the test.
 
- **Note**: If the lower and upper values of a grade reference overlap 
+ **Note**: If the lower and upper values of a grade reference overlap
  with another grade reference in the same group, a ``BoundaryOverlap``
  exception will be raised when the value is evaluated.
  Catch this in your tests.
@@ -91,14 +91,14 @@ Declaring with ``parse``
 You may find using ``parse`` somewhat simplifies the declaration where ``lower``, ``lower_inclusive``, ``upper`` and ``upper_inclusive`` can be written as a phrase, like ``13.5<=x<=17.5``. For example:
 
 .. code-block:: python
-    
+
     age_opts = dict(
         age_lower=18,
         age_upper=120,
         age_units='years',
         age_lower_inclusive=True,
         age_upper_inclusive=True)
-    
+
     normal_data = {
         'haemoglobin': [
             p('13.5<=x<=17.5', units=GRAMS_PER_DECILITER,
@@ -114,51 +114,51 @@ Registering with ``site_reportables``
 Once you have declared all your references, register them
 
 .. code-block:: python
-    
+
     site_reportables.register(
         name='my_project',
         normal_data=normal_data,
         grading_data=grading_data)
 
- 
+
 
 **Important**:
  Writing out references is prone to error. It is better to declare a
  dictionary of normal references and grading references. Use the ``parse`` function
- so that you can use a phrase like ``13.5<=x<=17.5`` instead of a listing attributes. 
+ so that you can use a phrase like ``13.5<=x<=17.5`` instead of a listing attributes.
  There are examples of complete ``normal_data`` and ``grading_data`` in the tests.
- See``edc_reportable.tests.reportables``. 
+ See``edc_reportable.tests.reportables``.
 
 You can export your declared references to CSV for further inspection
 
 .. code-block:: python
-    
+
     >>> site_reportables.to_csv(name='my_project', path='~/')
-    
+
     ('/Users/erikvw/my_project_normal_ranges.csv',
-    '/Users/erikvw/my_project_grading.csv')    
+    '/Users/erikvw/my_project_grading.csv')
 
 Using your reportables
 ======================
 
 In your code, get the references by collection name:
-    
+
 .. code-block:: python
-    
+
     my_project_reportables = site_reportables.get('my_project')
 
     neutrophil = my_project_reportables.get('neutrophil')
 
     report_datetime = get_utcnow()
-    dob = (report_datetime - relativedelta(years=25)).date() 
-    
+    dob = (report_datetime - relativedelta(years=25)).date()
+
 Check a normal value
 ====================
 
-If a value is normal, ``get_normal`` returns the ``NormalReference`` instance that matched with the value. 
+If a value is normal, ``get_normal`` returns the ``NormalReference`` instance that matched with the value.
 
 .. code-block:: python
-    
+
     # evaluate a normal value
     normal = neutrophil.get_normal(
         value=3.5, units='10^9/L',
@@ -174,7 +174,7 @@ Check an abnormal value
 If a value is abnormal, ``get_normal`` returns ``None``.
 
 .. code-block:: python
-    
+
     # evaluate an abnormal value
     opts = dict(
         units='10^9/L',
@@ -186,27 +186,27 @@ If a value is abnormal, ``get_normal`` returns ``None``.
     >>> if not normal:
             print('abnormal')
     'abnormal'
- 
+
 To show which ranges the value was evaluated against
 
 .. code-block:: python
-    
+
     # use same options for units, gender, dob, report_datetime
     >>> neutrophil.get_normal_description(**opts)
     ['2.5<=x<=7.5 10^9/L MF, 18<=AGE years']
-    
+
 Check if a value is "reportable"
 ================================
 
 .. code-block:: python
-    
+
     grade = neutrophil.get_grade(
         value=0.43, units='10^9/L',
         gender=MALE, dob=dob, report_datetime=report_datetime)
 
     >>> grade.grade
     3
-    
+
     >>> grade.description
     '0.4<=0.43<=0.59 10^9/L GRADE 3'
 
@@ -219,13 +219,13 @@ Check if a value is "reportable"
 
     >>> grade.description
     '0.3<0.4 10^9/L GRADE 4'
-    
+
 If the value is not evaluated against any reportable ranges, a ``NotEvaluated`` exception is raised
 
 .. code-block:: python
-    
+
     # call with the wrong units
-    
+
     >>> grade = neutrophil.get_grade(
             value=0.3, units='mmol/L',
             gender=MALE, dob=dob, report_datetime=report_datetime)
@@ -234,9 +234,9 @@ If the value is not evaluated against any reportable ranges, a ``NotEvaluated`` 
 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-reportable.svg
     :target: https://pypi.python.org/pypi/edc-reportable
-    
-.. |travis| image:: https://travis-ci.com/clinicedc/edc-reportable.svg?branch=develop
-    :target: https://travis-ci.com/clinicedc/edc-reportable
-    
+
+.. |actions| image:: https://github.com/clinicedc/edc-reportable/workflows/build/badge.svg?branch=develop
+  :target: https://github.com/clinicedc/edc-reportable/actions?query=workflow:build
+
 .. |coverage| image:: https://coveralls.io/repos/github/clinicedc/edc-reportable/badge.svg?branch=develop
     :target: https://coveralls.io/github/clinicedc/edc-reportable?branch=develop
