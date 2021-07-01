@@ -11,7 +11,7 @@ from edc_reportable import GRADE3, GRADE4, ReportablesFormValidatorMixin
 class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
 
     reportable_grades = [GRADE3, GRADE4]
-    reportable_reference_list_name = "my_reference_list"
+    reference_range_collection_name = "my_reference_list"
 
     def clean(self):
         self.validate_reportable_fields()
@@ -19,7 +19,7 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
     def validate_reportable_fields(self):
 
         reportables = self.reportables_cls(
-            reference_list_name=self.reportable_reference_list_name,
+            reference_range_collection_name=self.reference_range_collection_name,
             cleaned_data=copy(self.cleaned_data),
             gender=MALE,
             dob=get_utcnow() - relativedelta(years=25),
