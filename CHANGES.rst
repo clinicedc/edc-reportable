@@ -1,6 +1,10 @@
 Changes
 =======
 
+0.3.6
+-----
+- change field name creatinine to creatinine_value
+
 0.3.5
 -----
 - add normal ranges
