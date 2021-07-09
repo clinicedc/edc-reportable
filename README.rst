@@ -34,9 +34,8 @@ A normal reference is declared like this:
         age_units='years',
         gender=[MALE, FEMALE])
 
-    ref
-
- NormalReference(neutrophils, 2.5<x<7.5 10e9/L MF, 18<AGE<99 years)
+    >>> ref
+    NormalReference(neutrophils, 2.5<x<7.5 10e9/L MF, 18<AGE<99 years)
 
 And added to a group like this:
 
@@ -70,6 +69,23 @@ A grading reference is declared like this:
 
     >>> g3
     GradeReference(neutrophils, 0.4<=x<=0.59 in 10e9/L GRADE 3, MF, 18<AGE<99 in years) GRADE 3)
+
+    or using lower / upper limits of normal:
+
+    g3 = GradeReference(
+        name="amylase",
+        grade=1,
+        lower="3.0*ULN",
+        upper="5.0*ULN",
+        lower_inclusive=True,
+        upper_inclusive=False,
+        units=IU_LITER,
+        gender=MALE,
+        normal_references={MALE: [normal_reference]},
+        **adult_age_options)
+
+    >>> g3
+    GradeReference(amylase, 375.0<=x<625.0 IU/L GRADE 3) GRADE 3)
 
 And added to the group like this:
 
