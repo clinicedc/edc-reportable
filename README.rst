@@ -1,4 +1,4 @@
-|pypi| |actions| |coverage|
+|pypi| |actions| |codecov|
 
 edc-reportable
 --------------
@@ -254,5 +254,5 @@ If the value is not evaluated against any reportable ranges, a ``NotEvaluated`` 
 .. |actions| image:: https://github.com/clinicedc/edc-reportable/workflows/build/badge.svg?branch=develop
   :target: https://github.com/clinicedc/edc-reportable/actions?query=workflow:build
 
-.. |coverage| image:: https://coveralls.io/repos/github/clinicedc/edc-reportable/badge.svg?branch=develop
-    :target: https://coveralls.io/github/clinicedc/edc-reportable?branch=develop
+.. |codecov| image:: https://codecov.io/gh/clinicedc/edc-reportable/branch/develop/graph/badge.svg
+  :target: https://codecov.io/gh/clinicedc/edc-reportable
