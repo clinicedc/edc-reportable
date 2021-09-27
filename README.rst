@@ -145,6 +145,53 @@ Once you have declared all your references, register them
  There are examples of complete ``normal_data`` and ``grading_data`` in the tests.
  See``edc_reportable.tests.reportables``.
 
+Attempting to grade a value without grading data
+++++++++++++++++++++++++++++++++++++++++++++++++
+If a value is pased to the evaluator and no grading data exists in the reference lists for
+that test, an exception is raised.
+
+Limiting what is "gradeable" for your project
++++++++++++++++++++++++++++++++++++++++++++++
+The default tables have grading data for grades 1-4. The evaluator will grade any value
+if there is grading data. You can prevent the evaluator from considering grades by passing
+``reportable_grades`` when you register the normal and grading data.
+
+For example:
+
+.. code-block:: python
+
+    site_reportables.register(
+        name='my_project',
+        normal_data=normal_data,
+        grading_data=grading_data,
+        reportable_grades=[GRADE3, GRADE4],
+    )
+
+In the above, by explicitly passing a list of grades, the evaluator will only raise an
+exception for grades 3 and 4. If a value meets the criteria for grade 1 or 2, it will be ignored.
+
+Declaring minor exceptions
+++++++++++++++++++++++++++
+
+Minor exceptions can be specified using the parameter ``reportable_grades_exceptions``.
+For example, you wish to report grades 2,3,4 for Serum Amylase
+but grades 3,4 for everything else. You would register as follows:
+
+.. code-block:: python
+
+    site_reportables.register(
+        name='my_project',
+        normal_data=normal_data,
+        grading_data=grading_data,
+        reportable_grades=[GRADE3, GRADE4],
+        reportable_grades_exceptions={"amylase": [GRADE2, GRADE3, GRADE4]}
+    )
+
+
+
+Exporting the reference tables
+++++++++++++++++++++++++++++++
+
 You can export your declared references to CSV for further inspection
 
 .. code-block:: python
