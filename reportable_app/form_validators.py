@@ -10,7 +10,6 @@ from edc_reportable import GRADE3, GRADE4, ReportablesFormValidatorMixin
 
 class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
 
-    reportable_grades = [GRADE3, GRADE4]
     reference_range_collection_name = "my_reference_list"
 
     def clean(self):
@@ -33,4 +32,4 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
             YES, field="results_abnormal", field_applicable="results_reportable"
         )
 
-        reportables.validate_results_reportable_field(responses=self.reportable_grades)
+        reportables.validate_results_reportable_field()
