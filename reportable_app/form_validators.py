@@ -18,7 +18,7 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
     def validate_reportable_fields(self):
 
         reportables = self.reportables_cls(
-            reference_range_collection_name=self.reference_range_collection_name,
+            self.reference_range_collection_name,
             cleaned_data=copy(self.cleaned_data),
             gender=MALE,
             dob=get_utcnow() - relativedelta(years=25),
