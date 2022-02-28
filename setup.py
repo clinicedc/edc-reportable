@@ -22,6 +22,7 @@ setup(
     url="http://github.com/clinicedc/edc-reportable",
     license="GPL license, see LICENSE",
     description="Reportable clinic events, reference ranges, grading",
+    long_description_content_type="text/x-rst",
     long_description=README,
     include_package_data=True,
     zip_safe=False,
