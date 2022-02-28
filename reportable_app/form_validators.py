@@ -5,7 +5,7 @@ from edc_constants.constants import MALE, YES
 from edc_form_validators import FormValidator
 from edc_utils.date import get_utcnow
 
-from edc_reportable import GRADE3, GRADE4, ReportablesFormValidatorMixin
+from edc_reportable import ReportablesFormValidatorMixin
 
 
 class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
@@ -15,7 +15,7 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
     def clean(self):
         self.validate_reportable_fields()
 
-    def validate_reportable_fields(self):
+    def validate_reportable_fields(self, *args, **kwargs):
 
         reportables = self.reportables_cls(
             self.reference_range_collection_name,
