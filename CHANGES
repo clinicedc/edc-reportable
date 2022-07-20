@@ -1,6 +1,13 @@
 Changes
 =======
 
+0.3.20
+------
+- add eGFR and eGFR drop to DAIDS tox list where
+  eGFR "0.0<=x<45.0" and eGFR drop >40% drop from
+  baseline.
+- fix egfr_percent_change to return percentage (*100)
+
 0.3.6
 -----
 - change field name creatinine to creatinine_value
