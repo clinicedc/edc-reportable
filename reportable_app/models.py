@@ -9,12 +9,10 @@ from edc_reportable.units import GRAMS_PER_DECILITER
 
 
 class SubjectVisit(BaseUuidModel):
-
     subject_identifier = models.CharField(max_length=25)
 
 
 class SpecimenResult(BaseUuidModel):
-
     subject_visit = models.ForeignKey(SubjectVisit, on_delete=CASCADE)
 
     report_datetime = models.DateTimeField(default=get_utcnow)
