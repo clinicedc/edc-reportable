@@ -298,8 +298,8 @@ If the value is not evaluated against any reportable ranges, a ``NotEvaluated`` 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-reportable.svg
     :target: https://pypi.python.org/pypi/edc-reportable
 
-.. |actions| image:: https://github.com/clinicedc/edc-reportable/workflows/build/badge.svg?branch=develop
-  :target: https://github.com/clinicedc/edc-reportable/actions?query=workflow:build
+.. |actions| image:: https://github.com/clinicedc/edc-reportable/actions/workflows/build.yml/badge.svg
+  :target: https://github.com/clinicedc/edc-reportable/actions/workflows/build.yml
 
 .. |codecov| image:: https://codecov.io/gh/clinicedc/edc-reportable/branch/develop/graph/badge.svg
   :target: https://codecov.io/gh/clinicedc/edc-reportable
