@@ -5,7 +5,7 @@ from edc_constants.constants import MALE, YES
 from edc_form_validators import FormValidator
 from edc_utils.date import get_utcnow
 
-from edc_reportable import ReportablesFormValidatorMixin
+from edc_reportable.forms import ReportablesFormValidatorMixin
 
 
 class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
