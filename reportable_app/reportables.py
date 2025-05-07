@@ -44,13 +44,7 @@ normal_data = {
         Formula("53<=x<=115", units=MICROMOLES_PER_LITER, gender=[MALE, FEMALE], **age_opts),
     ],
     "tbil": [
-        Formula("5.0<=x<21.0", units=MILLIMOLES_PER_LITER, gender=[MALE, FEMALE], **age_opts),
-        Formula(
-            "90.1<=x<378.3",
-            units=MILLIGRAMS_PER_DECILITER,
-            gender=[MALE, FEMALE],
-            **age_opts,
-        ),
+        Formula("5.0<=x<21.0", units=MICROMOLES_PER_LITER, gender=[MALE, FEMALE], **age_opts),
     ],
 }
 
