@@ -21,6 +21,7 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
             gender=MALE,
             dob=get_utcnow() - relativedelta(years=25),
             report_datetime=get_utcnow(),
+            age_units="years",
         )
         reportables.validate_reportable_fields()
 
