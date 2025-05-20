@@ -23,8 +23,10 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
             report_datetime=get_utcnow(),
             age_units="years",
         )
+        # is the value `reportable` according to the user?
         reportables.validate_reportable_fields()
 
+        # is the value `abnormal` according to the user?
         reportables.validate_results_abnormal_field()
 
         self.applicable_if(
