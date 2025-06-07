@@ -117,9 +117,9 @@ You may find using ``parse`` somewhat simplifies the declaration where ``lower``
 
     normal_data = {
         'haemoglobin': [
-            p('13.5<=x<=17.5', units=GRAMS_PER_DECILITER,
+            Formula'13.5<=x<=17.5', units=GRAMS_PER_DECILITER,
               gender=[MALE], **age_opts),
-            p('12.0<=x<=15.5', units=GRAMS_PER_DECILITER, gender=[FEMALE], **age_opts)],
+            Formula'12.0<=x<=15.5', units=GRAMS_PER_DECILITER, gender=[FEMALE], **age_opts)],
          ...
     }
 
@@ -164,7 +164,7 @@ For example:
         name='my_project',
         normal_data=normal_data,
         grading_data=grading_data,
-        reportable_grades=[GRADE3, GRADE4],
+        reportable_grades=[3, 4],
     )
 
 In the above, by explicitly passing a list of grades, the evaluator will only raise an
@@ -183,7 +183,7 @@ but grades 3,4 for everything else. You would register as follows:
         name='my_project',
         normal_data=normal_data,
         grading_data=grading_data,
-        reportable_grades=[GRADE3, GRADE4],
+        reportable_grades=[3, 4],
         reportable_grades_exceptions={"amylase": [GRADE2, GRADE3, GRADE4]}
     )
 

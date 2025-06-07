@@ -15,7 +15,7 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
         self.validate_reportable_fields()
 
     def validate_reportable_fields(self, *args, **kwargs):
-        reportables = self.reportables_cls(
+        reference_range_evaluator = self.reference_range_evaluator_cls(
             self.reference_range_collection_name,
             cleaned_data=copy(self.cleaned_data),
             gender=MALE,
@@ -24,13 +24,13 @@ class SpecimenResultFormValidator(ReportablesFormValidatorMixin, FormValidator):
             age_units="years",
         )
         # is the value `reportable` according to the user?
-        reportables.validate_reportable_fields()
+        reference_range_evaluator.validate_reportable_fields()
 
         # is the value `abnormal` according to the user?
-        reportables.validate_results_abnormal_field()
+        reference_range_evaluator.validate_results_abnormal_field()
 
         self.applicable_if(
             YES, field="results_abnormal", field_applicable="results_reportable"
         )
 
-        reportables.validate_results_reportable_field()
+        reference_range_evaluator.validate_results_reportable_field()

@@ -1,10 +1,6 @@
 from edc_constants.constants import FEMALE, MALE
 
 from edc_reportable import (
-    GRADE1,
-    GRADE2,
-    GRADE3,
-    GRADE4,
     GRAMS_PER_DECILITER,
     IU_LITER,
     MICROMOLES_PER_LITER,
@@ -13,6 +9,18 @@ from edc_reportable import (
     TEN_X_9_PER_LITER,
     Formula,
 )
+
+__all__ = [
+    "collection_name",
+    "reportable_grades",
+    "reportable_grades_exceptions",
+    "normal_data",
+    "grading_data",
+]
+
+collection_name = "my_reportables"
+reportable_grades = [3, 4]
+reportable_grades_exceptions = {}
 
 age_opts = dict(age_lower=18, age_upper=None, age_units="years", age_lower_inclusive=True)
 
@@ -50,64 +58,56 @@ normal_data = {
 
 grading_data = {
     "haemoglobin": [
-        Formula(
-            "7.0<=x<9.0", grade=GRADE3, units=GRAMS_PER_DECILITER, gender=[MALE], **age_opts
-        ),
-        Formula(
-            "6.5<=x<8.5", grade=GRADE3, units=GRAMS_PER_DECILITER, gender=[FEMALE], **age_opts
-        ),
-        Formula("x<7.0", grade=GRADE4, units=GRAMS_PER_DECILITER, gender=[MALE], **age_opts),
-        Formula("x<6.5", grade=GRADE4, units=GRAMS_PER_DECILITER, gender=[FEMALE], **age_opts),
+        Formula("7.0<=x<9.0", grade=3, units=GRAMS_PER_DECILITER, gender=[MALE], **age_opts),
+        Formula("6.5<=x<8.5", grade=3, units=GRAMS_PER_DECILITER, gender=[FEMALE], **age_opts),
+        Formula("x<7.0", grade=4, units=GRAMS_PER_DECILITER, gender=[MALE], **age_opts),
+        Formula("x<6.5", grade=4, units=GRAMS_PER_DECILITER, gender=[FEMALE], **age_opts),
     ],
     "platelets": [
         Formula(
             "25<=x<=50",
-            grade=GRADE3,
+            grade=3,
             units=TEN_X_9_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
-        Formula(
-            "x<25", grade=GRADE4, units=TEN_X_9_PER_LITER, gender=[MALE, FEMALE], **age_opts
-        ),
+        Formula("x<25", grade=4, units=TEN_X_9_PER_LITER, gender=[MALE, FEMALE], **age_opts),
     ],
     "neutrophil": [
         Formula(
             "0.4<=x<=0.59",
-            grade=GRADE3,
+            grade=3,
             units=TEN_X_9_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
-        Formula(
-            "x<0.4", grade=GRADE4, units=TEN_X_9_PER_LITER, gender=[MALE, FEMALE], **age_opts
-        ),
+        Formula("x<0.4", grade=4, units=TEN_X_9_PER_LITER, gender=[MALE, FEMALE], **age_opts),
     ],
     "sodium": [
         Formula(
             "121<=x<=124",
-            grade=GRADE3,
+            grade=3,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "154<=x<=159",
-            grade=GRADE3,
+            grade=3,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "160<=x",
-            grade=GRADE4,
+            grade=4,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "x<=120",
-            grade=GRADE4,
+            grade=4,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
@@ -116,28 +116,28 @@ grading_data = {
     "potassium": [
         Formula(
             "2.0<=x<=2.4",
-            grade=GRADE3,
+            grade=3,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "6.5<=x<=7.0",
-            grade=GRADE3,
+            grade=3,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "x<2.0",
-            grade=GRADE4,
+            grade=4,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "7.0<x",
-            grade=GRADE4,
+            grade=4,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
@@ -146,50 +146,48 @@ grading_data = {
     "magnesium": [
         Formula(
             "0.3<=x<=0.44",
-            grade=GRADE3,
+            grade=3,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "x<0.3",
-            grade=GRADE4,
+            grade=4,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
     ],
     "alt": [
-        Formula(
-            "200<=x<=400", grade=GRADE3, units=IU_LITER, gender=[MALE, FEMALE], **age_opts
-        ),
-        Formula("400<x", grade=GRADE4, units=IU_LITER, gender=[MALE, FEMALE], **age_opts),
+        Formula("200<=x<=400", grade=3, units=IU_LITER, gender=[MALE, FEMALE], **age_opts),
+        Formula("400<x", grade=4, units=IU_LITER, gender=[MALE, FEMALE], **age_opts),
     ],
     "creatinine": [
         Formula(
             "2.47<=x<=4.42",
-            grade=GRADE3,
+            grade=3,
             units=MILLIGRAMS_PER_DECILITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "216<=x<=400",
-            grade=GRADE3,
+            grade=3,
             units=MICROMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "4.55<x",
-            grade=GRADE4,
+            grade=4,
             units=MILLIGRAMS_PER_DECILITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "400<x",
-            grade=GRADE4,
+            grade=4,
             units=MICROMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
@@ -198,56 +196,56 @@ grading_data = {
     "tbil": [
         Formula(
             "1.10*ULN<=x<1.60*ULN",
-            grade=GRADE1,
+            grade=1,
             units=MILLIGRAMS_PER_DECILITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "1.60*ULN<=x<2.60*ULN",
-            grade=GRADE2,
+            grade=2,
             units=MILLIGRAMS_PER_DECILITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "2.60*ULN<=x<5.00*ULN",
-            grade=GRADE3,
+            grade=3,
             units=MILLIGRAMS_PER_DECILITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "5.00*ULN<=x",
-            grade=GRADE4,
+            grade=4,
             units=MILLIGRAMS_PER_DECILITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "1.10*ULN<=x<1.60*ULN",
-            grade=GRADE1,
+            grade=1,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "1.60*ULN<=x<2.60*ULN",
-            grade=GRADE2,
+            grade=2,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "2.60*ULN<=x<5.00*ULN",
-            grade=GRADE3,
+            grade=3,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
         ),
         Formula(
             "5.00*ULN<=x",
-            grade=GRADE4,
+            grade=4,
             units=MILLIMOLES_PER_LITER,
             gender=[MALE, FEMALE],
             **age_opts,
