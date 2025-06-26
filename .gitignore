@@ -1,3 +1,4 @@
+.DS_Store
 django_crypto_fields
 _version.py
 etc/*
